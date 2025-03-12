@@ -1,54 +1,114 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>DNA 메일 서명 생성기</title>
-	<style type="text/css">
-		table {
-			border-collapse: separate;
-			width: 100%;
-		}
-		th, td {
-			text-align: center;
-			padding: 8px;
-		}
-		th {
-			background-color: #f2f2f2;
-		}
-		tr:nth-child(even) {
-			background-color: #f2f2f2;
-		}
-	</style>
-	<script type="text/javascript">
-		function copyToClipboard(text) {
-			var dummy = document.createElement("textarea");
-			document.body.appendChild(dummy);
-			dummy.value = text;
-			dummy.select();
-			document.execCommand("copy");
-			document.body.removeChild(dummy);
+    <title>DNA 메일 서명 생성기</title>
+    <style type="text/css">
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-top: 20px;
+        }
+        input[type="text"] {
+            width: 60%;
+            font-size: 16px;
+            padding: 10px;
+            margin: 20px auto;
+            display: block;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #0099FF;
+            color: white;
+            font-size: 16px;
+            padding: 10px 20px;
+            margin: 10px auto;
+            display: block;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #007ACC;
+        }
+        table {
+            border-collapse: collapse;
+            width: 90%;
+            margin: 0 auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            text-align: center;
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #0099FF;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #ddd;
+        }
+        div {
+            overflow-y: auto;
+            max-height: 500px;
+            margin: 0 auto;
+            width: 90%;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: white;
+        }
+    </style>
+    <script type="text/javascript">
+        function copyToClipboard(text) {
+            var dummy = document.createElement("textarea");
+            document.body.appendChild(dummy);
+            dummy.value = text;
+            dummy.select();
+            document.execCommand("copy");
+            document.body.removeChild(dummy);
             alert("생성 완료");
-		}
-	</script>
-</head>
+        }
+        function myFunction() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[1];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    tr[i].style.display = txtValue.toUpperCase().indexOf(filter) > -1 ? "" : "none";
+                }
+            }
+        }
+    </script>
 <body>
-  <h1>DNA 메일 서명 생성기</h1>
-	<input type="text" id="myInput" onkeyup="myFunction()" placeholder="검색...">
-
-<!--E-mail Signature Generate and Copy(Don't touch)-->
-  <button onclick="
-	var names = document.getElementsByName('name');
-	var code = '';
-	for (var i = 0; i < names.length; i++) {
-	if (names[i].checked) {
-	code += '<img src=\'https\:\/\/raw.githubusercontent.com/dgistdna/mailsig-gen/refs/heads/main/img/' + names[i].value + '.PNG\' alt=\'' + names[i].value + '\' width=\'350\' height=\'150\'>';
-}
-}
-copyToClipboard(code);
-">생성</button>
-
-
-<!--list of personnels(Here you modify)-->
-<div style="width:100%; height:500px;overflow:auto">
+    <h1>DNA 메일 서명 생성기</h1>
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="이름으로 검색...">
+    <button onclick="
+        var names = document.getElementsByName('name');
+        var code = '';
+        for (var i = 0; i < names.length; i++) {
+            if (names[i].checked) {
+                code += '<img src=\'https\:\/\/raw.githubusercontent.com/dgistdna/mailsig-gen/refs/heads/main/img/' + names[i].value + '.PNG\' alt=\'' + names[i].value + '\' width=\'350\' height=\'150\'>';
+            }
+        }
+        copyToClipboard(code);
+    ">생성</button>
+    <div>
 	<table id="myTable">
 		<thead>
 			<tr>
